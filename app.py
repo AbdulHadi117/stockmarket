@@ -10,14 +10,13 @@ from datetime import date,datetime,timedelta
 st.set_page_config(
     page_title='STOCKS DASHBOARD',
     page_icon='📊',
-    layout='wide')
+    layout='wide')          ##* SETTING PAGE CONFIGURATIONS
 
 st.title('STOCK MARKET DASHBOARD📊')
-st.markdown('##')
+st.markdown('##')           ##* SETTING PAGE TITLE
 
-#! VARIABLES
-tickers_list = ['AAPL','GOOGL','MSFT','META','TSLA','AMZN']
-
+#! VARIABLES            
+tickers_list = ['AAPL','GOOGL','MSFT','META','TSLA','AMZN'] ##* MADE A TICKER LIST
 
 #* SIDEBAR
 with st.sidebar:
@@ -29,11 +28,12 @@ with st.sidebar:
 - Analyze stock prices and make informed investment decisions.
 ''')
     st.markdown('---')
-    st.header('SELECT THE DATE')
+
+    st.header('SELECT THE DATE')            ###* FILTERING DATE
     start = st.date_input('Start Date',date.today()-timedelta(days=365))
     end = st.date_input('End Date',date.today())
 
-    st.header('SELECT THE COMPANY')
+    st.header('SELECT THE COMPANY')         ###* FILTERING COMPANY
     ticker = st.selectbox('Select',tickers_list)
     st.markdown('---')
     st.markdown('''
@@ -49,7 +49,7 @@ with st.sidebar:
 
 #! IMPORT DATA
 
-df = yf.download(tickers=ticker,start=start,end=end)
+df = yf.download(tickers=ticker,start=start,end=end)        ###* FILTERED DATA
 df.insert(0,'Date',df.index,True)
 df.reset_index(drop=True,inplace=True)
 
@@ -61,7 +61,7 @@ for ticker in tickers_list:
 
 combined_df = pd.concat(dataframes)
 combined_df.insert(0,'Date',combined_df.index,True)
-combined_df.reset_index(drop=True,inplace=True)
+combined_df.reset_index(drop=True,inplace=True)             ###* COMPLETE DATA
 
 #* MAIN PAGE
 
